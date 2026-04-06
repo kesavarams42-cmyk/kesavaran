@@ -1,16 +1,28 @@
-# 🌦 Weather App
+# Weather Now
 
-A responsive weather web app using OpenWeatherMap API.
+A responsive web app that fetches live weather data from the OpenWeatherMap API using either:
 
-## 🚀 Features
-- Search weather by city
-- Get weather using current location
-- Shows temperature, humidity, condition
-- 5-day forecast
-- Fully responsive design
+- a city entered by the user
+- the user's current geolocation
 
-## 🔑 Setup
-1. Get API key from https://openweathermap.org/api
-2. Replace API key in script.js:
-   ```js
-   const API_KEY = "YOUR_API_KEY";
+It displays:
+
+- temperature
+- humidity
+- weather condition
+- feels like temperature
+- wind speed
+- pressure
+- optional 5-day forecast
+
+## Run
+
+1. Open `index.html` in a browser.
+2. Enter your OpenWeatherMap API key.
+3. Search for a city or click `Use my location`.
+
+## Notes
+
+- The app stores the API key in `localStorage` for convenience in the current browser.
+- Weather units are displayed in Celsius.
+- Geolocation requires browser permission.
