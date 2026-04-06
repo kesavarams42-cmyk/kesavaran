@@ -1,7 +1,7 @@
 // Complete Weather App 
 
 // API key constant
-const API_KEY = 'your_api_key_here';
+const API_KEY = 'fbb94848776251103eae6b5af8cc2134';
 
 // Event listener for search by city
 document.getElementById('search-button').addEventListener('click', function() {
