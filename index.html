@@ -3,116 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather App</title>
-    
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 90%;
-            max-width: 600px;
-        }
-        input {
-            padding: 10px;
-            margin: 10px 0;
-            width: calc(100% - 22px);
-        }
-        button {
-            padding: 10px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .weather-display, .forecast {
-            margin-top: 20px;
-        }
-        <link rel="stylesheet" href="style.css">
-    </style>
+    <title>🌦 Weather App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Weather App</h1>
-        <input type="text" id="city-input" placeholder="Enter city name" />
-        <button id="geo-button">Use Geolocation</button>
-        <div class="weather-display" id="weather-display"></div>
-        <div class="forecast" id="forecast"></div>
+        <h1>🌦 Weather App</h1>
+        <p>Get weather information for any city or your current location</p>
+        
+        <div class="search-section">
+            <input 
+                type="text" 
+                id="cityInput" 
+                placeholder="Enter city name..." 
+                autocomplete="off"
+            />
+            <button id="searchBtn">Search</button>
+            <button id="locationBtn">📍 Use My Location</button>
+        </div>
+
+        <div id="weather" class="weather-display hidden">
+            <div class="weather-info">
+                <div id="city" class="city-name"></div>
+                <div id="temp" class="temperature"></div>
+                <div id="desc" class="description"></div>
+                <div id="humidity" class="humidity"></div>
+                <div id="wind" class="wind"></div>
+            </div>
+        </div>
+
+        <div id="forecast" class="forecast hidden">
+            <h3>📅 5-Day Forecast</h3>
+            <div id="forecastCards" class="forecast-cards"></div>
+        </div>
+
+        <div id="error" class="error-message hidden"></div>
     </div>
 
-    <script>
-        document.getElementById('geo-button').addEventListener('click', function() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(getWeatherByGeolocation);
-            } else {
-                alert('Geolocation is not supported by this browser.');
-            }
-        });
-
-        function getWeatherByGeolocation(position) {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            fetchWeatherData(lat, lon);
-        }
-
-        document.getElementById('city-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                const city = e.target.value;
-                fetchWeatherDataByCity(city);
-            }
-        });
-
-        function fetchWeatherData(lat, lon) {
-            // Fetch weather data with lat/lon
-            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=YOUR_API_KEY&units=metric`)
-                .then(response => response.json())
-                .then(data => displayWeather(data));
-        }
-
-        function fetchWeatherDataByCity(city) {
-            // Fetch weather data by city
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=YOUR_API_KEY&units=metric`)
-                .then(response => response.json())
-                .then(data => displayWeather(data));
-        }
-
-        function displayWeather(data) {
-            // Display weather data on the page
-            const weatherDisplay = document.getElementById('weather-display');
-            weatherDisplay.innerHTML = `<h2>Weather in ${data.name}</h2><p>${data.weather[0].description}</p><p>Temperature: ${data.main.temp}&deg;C</p>`;
-            fetchForecast(data.coord.lat, data.coord.lon);
-        }
-
-        function fetchForecast(lat, lon) {
-            // Fetch 5-day forecast data
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=YOUR_API_KEY&units=metric`)
-                .then(response => response.json())
-                .then(data => displayForecast(data));
-        }
-
-        function displayForecast(data) {
-            const forecastDisplay = document.getElementById('forecast');
-            forecastDisplay.innerHTML = '<h3>5-Day Forecast</h3>';
-            const forecastList = data.list.filter(item => item.dt_txt.includes('12:00:00'));
-            forecastList.forEach(item => {
-                forecastDisplay.innerHTML += `<p>${new Date(item.dt_txt).toLocaleDateString()}: ${item.weather[0].description}, Temp: ${item.main.temp}&deg;C</p>`;
-            });
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
