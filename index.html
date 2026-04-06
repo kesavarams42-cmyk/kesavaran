@@ -1,45 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌦 Weather App</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather Now</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>🌦 Weather App</h1>
-        <p>Get weather information for any city or your current location</p>
-        
-        <div class="search-section">
-            <input 
-                type="text" 
-                id="cityInput" 
-                placeholder="Enter city name..." 
-                autocomplete="off"
-            />
-            <button id="searchBtn">Search</button>
-            <button id="locationBtn">📍 Use My Location</button>
-        </div>
+  <div class="page-shell">
+    <main class="weather-app">
+      <section class="hero-panel">
+        <p class="eyebrow">Responsive Weather Dashboard</p>
+        <h1>Track live weather anywhere.</h1>
+        <p class="hero-copy">
+          Search by city or use your current location to view temperature, humidity,
+          conditions, and an optional 5-day outlook.
+        </p>
 
-        <div id="weather" class="weather-display hidden">
-            <div class="weather-info">
-                <div id="city" class="city-name"></div>
-                <div id="temp" class="temperature"></div>
-                <div id="desc" class="description"></div>
-                <div id="humidity" class="humidity"></div>
-                <div id="wind" class="wind"></div>
+        <form id="weather-form" class="search-panel">
+          <label class="field-label" for="api-key">OpenWeatherMap API key</label>
+          <div class="input-row">
+            <input
+              id="api-key"
+              name="apiKey"
+              type="password"
+              placeholder="Enter your API key"
+              autocomplete="off"
+              required
+            >
+            <button type="button" id="save-key-btn" class="secondary-btn">Save key</button>
+          </div>
+
+          <label class="field-label" for="city-input">City name</label>
+          <div class="input-row input-row--search">
+            <input
+              id="city-input"
+              name="city"
+              type="text"
+              placeholder="Search for a city"
+              autocomplete="off"
+            >
+            <button type="submit" class="primary-btn">Search</button>
+          </div>
+
+          <div class="action-row">
+            <button type="button" id="location-btn" class="ghost-btn">Use my location</button>
+            <label class="toggle">
+              <input type="checkbox" id="forecast-toggle" checked>
+              <span>Show 5-day forecast</span>
+            </label>
+          </div>
+        </form>
+
+        <p id="status-message" class="status-message" aria-live="polite">
+          Enter your API key and search for a city to get started.
+        </p>
+      </section>
+
+      <section class="results-panel">
+        <article id="current-weather" class="current-card hidden" aria-live="polite">
+          <div class="current-card__header">
+            <div>
+              <p id="location-name" class="location-name"></p>
+              <h2 id="weather-title"></h2>
             </div>
-        </div>
+            <div id="weather-icon" class="weather-icon" aria-hidden="true"></div>
+          </div>
 
-        <div id="forecast" class="forecast hidden">
-            <h3>📅 5-Day Forecast</h3>
-            <div id="forecastCards" class="forecast-cards"></div>
-        </div>
+          <div class="current-card__body">
+            <div class="temperature-wrap">
+              <p id="temperature" class="temperature"></p>
+              <p id="condition-text" class="condition-text"></p>
+            </div>
 
-        <div id="error" class="error-message hidden"></div>
-    </div>
+            <div class="metrics-grid">
+              <div class="metric-card">
+                <span>Humidity</span>
+                <strong id="humidity"></strong>
+              </div>
+              <div class="metric-card">
+                <span>Feels like</span>
+                <strong id="feels-like"></strong>
+              </div>
+              <div class="metric-card">
+                <span>Wind</span>
+                <strong id="wind-speed"></strong>
+              </div>
+              <div class="metric-card">
+                <span>Pressure</span>
+                <strong id="pressure"></strong>
+              </div>
+            </div>
+          </div>
+        </article>
 
-    <script src="script.js"></script>
+        <section id="forecast-section" class="forecast-section hidden" aria-live="polite">
+          <div class="section-heading">
+            <h3>5-Day Forecast</h3>
+            <p>Daily outlook based on the next available daytime reading.</p>
+          </div>
+          <div id="forecast-grid" class="forecast-grid"></div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
